@@ -86,13 +86,13 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
               </div>
             </div>
 
-            {/* ===== LIENS NAVIGATION (desktop) ===== */}
+            {/* ===== LIENS NAVIGATION (desktop) - avec soulignement au hover ===== */}
             <div className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
                 <a
                   key={link}
                   href={`#${link.toLowerCase()}`}
-                  className={`text-sm font-semibold uppercase tracking-wider transition-colors duration-200 hover:text-[#C9A84C] ${
+                  className={`text-sm font-semibold uppercase tracking-wider transition-all duration-200 hover:text-[#C9A84C] hover:underline underline-offset-4 decoration-[#C9A84C] decoration-2 ${
                     scrolled ? 'text-[#1B5E35]' : 'text-white'
                   }`}
                 >
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                     className={`px-4 h-9 text-xs font-black uppercase tracking-widest border-2 transition-all duration-300 ${
                       scrolled
                         ? 'border-[#1B5E35] text-[#1B5E35] hover:bg-[#1B5E35] hover:text-[#F0C040]'
-                        : 'border-white text-white hover:bg-white hover:text-[#1B5E35]'
+                        : 'border-white text-white hover:bg-[#C9A84C] hover:text-[#1B5E35] hover:border-[#C9A84C]'
                     }`}
                   >
                     Connexion
@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                 key={link}
                 href={`#${link.toLowerCase()}`}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-semibold uppercase tracking-wider text-[#1B5E35] py-2 border-b border-gray-100 hover:text-[#C9A84C] transition-colors"
+                className="text-sm font-semibold uppercase tracking-wider text-[#1B5E35] py-2 border-b border-gray-100 hover:text-[#C9A84C] hover:underline underline-offset-4 decoration-[#C9A84C] decoration-2 transition-all"
               >
                 {link}
               </a>
