@@ -1,3 +1,9 @@
+/* ==========================================================
+   index.css — Charte graphique officielle IVOIRE BUSINESS CLUB
+   Couleurs extraites du logo et flyers officiels IBC
+   Vert #1B5E35 | Or #C9A84C | Or vif #F0C040 | Blanc #FFFFFF
+   ========================================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
 @import "tailwindcss";
 
@@ -6,109 +12,293 @@
   --font-serif: "Playfair Display", serif;
   --font-display: "Plus Jakarta Sans", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  
-  /* Charte IBC Officielle */
-  --ibc-green: #1B5E35;
-  --ibc-green-dark: #154A2C;
-  --ibc-gold: #C9A84C;
-  --ibc-gold-light: #F0C040;
-  
-  /* Couleurs brand (compatibilité) */
-  --color-brand-green: #1B5E35;
-  --color-brand-green-dark: #154A2C;
-  --color-brand-green-light: #2E7D52;
-  --color-brand-gold: #C9A84C;
-  --color-brand-gold-light: #F0C040;
-  --color-brand-cream: #FDFBFA;
-  --color-brand-border: #E8E5DC;
 
-  --shadow-premium: 0 20px 50px rgba(21, 74, 44, 0.1);
-  --shadow-luxury: 0 30px 60px rgba(21, 74, 44, 0.15);
+  /* ===== CHARTE IBC OFFICIELLE (NE PAS MODIFIER) ===== */
+  --ibc-green:        #1B5E35;
+  --ibc-green-dark:   #154A2C;
+  --ibc-green-light:  #2E7D52;
+  --ibc-gold:         #C9A84C;
+  --ibc-gold-light:   #F0C040;
+  --ibc-cream:        #FDFBFA;
+  --ibc-border:       #E8E5DC;
+  --ibc-white:        #FFFFFF;
+  --ibc-black:        #0D0D0D;
+
+  /* Alias brand pour Tailwind */
+  --color-brand-green:       #1B5E35;
+  --color-brand-green-dark:  #154A2C;
+  --color-brand-green-light: #2E7D52;
+  --color-brand-gold:        #C9A84C;
+  --color-brand-gold-light:  #F0C040;
+  --color-brand-cream:       #FDFBFA;
+  --color-brand-border:      #E8E5DC;
+
+  /* Shadows IBC */
+  --shadow-premium: 0 20px 50px rgba(21, 74, 44, 0.10);
+  --shadow-luxury:  0 30px 60px rgba(21, 74, 44, 0.15);
+  --shadow-gold:    0 10px 40px rgba(201, 168, 76, 0.20);
 }
 
+/* ===== BASE ===== */
 @layer base {
   body {
     @apply font-sans antialiased bg-brand-cream text-brand-green-dark;
   }
+  h1, h2, h3 {
+    font-family: "Playfair Display", serif;
+  }
 }
 
-.text-gold { @apply text-brand-gold; }
-.bg-gold { @apply bg-brand-gold; }
-.bg-green-dark { @apply bg-brand-green-dark; }
-
+/* ===== GRADIENTS IBC ===== */
 .gradient-hero {
   background: linear-gradient(135deg, #0F341D 0%, #154A2C 50%, #1B5E35 100%);
 }
-
 .gradient-gold {
   background: linear-gradient(135deg, #C9A84C 0%, #F0C040 100%);
 }
+.gradient-card {
+  background: linear-gradient(145deg, #ffffff 0%, #FDFBFA 100%);
+}
 
+/* ===== UTILITAIRES TEXTE ===== */
+.text-gold    { color: #C9A84C; }
+.text-gold-light { color: #F0C040; }
+.bg-gold      { background-color: #C9A84C; }
+.bg-ibc-green { background-color: #1B5E35; }
+.bg-green-dark { background-color: #154A2C; }
+
+/* ===== TYPO CAPSULES ===== */
 .label-caps {
-  @apply text-[10px] font-black uppercase tracking-[0.4em] text-brand-gold;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: #C9A84C;
 }
 
+/* ===== CARDS ===== */
 .card-luxe {
-  @apply bg-white border border-brand-border rounded-none p-8 transition-all duration-500 hover:shadow-luxury hover:-translate-y-2;
+  @apply bg-white border border-brand-border rounded-none p-8;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-luxe:hover {
+  box-shadow: var(--shadow-luxury);
+  transform: translateY(-4px);
 }
 
-@keyframes pulse-gold {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.6); }
-  70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-150%) rotate(45deg); }
-  100% { transform: translateX(150%) rotate(45deg); }
-}
-
-@utility pulse-gold {
-  animation: pulse-gold 2s infinite;
-}
-
-@utility shimmer {
-  position: relative;
-  overflow: hidden;
-}
-
-@utility shimmer-after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(45deg);
-  animation: shimmer 4s infinite;
-}
-
-.shimmer::after {
-  @apply shimmer-after;
-}
-
-.badge-float {
-  @apply fixed bottom-8 right-8 z-50 px-6 py-4 bg-brand-gold text-brand-green-dark font-bold rounded-none shadow-2xl;
-  animation: pulse-gold 2s infinite;
-}
-
-/* Bootstrap Adjustments */
-.navbar {
-  height: 72px;
-}
-
+/* ===== BOUTONS ===== */
 .btn-membership {
   height: 54px;
   border-radius: 0px;
-  @apply font-bold px-10 flex items-center justify-center transition-all duration-300 active:scale-95 no-underline;
+  @apply font-bold px-10 flex items-center justify-center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btn-membership:active { transform: scale(0.97); }
+.btn-ibc-primary {
+  background-color: #1B5E35;
+  color: #F0C040;
+  border: 1px solid #C9A84C;
+}
+.btn-ibc-primary:hover {
+  background-color: #154A2C;
+  color: #F0C040;
+}
+.btn-ibc-gold {
+  background: linear-gradient(135deg, #C9A84C 0%, #F0C040 100%);
+  color: #1B5E35;
+  font-weight: 900;
+}
+.btn-ibc-gold:hover {
+  box-shadow: 0 8px 30px rgba(201, 168, 76, 0.4);
+  transform: translateY(-1px);
 }
 
-a {
-  @apply no-underline hover:no-underline;
+/* ===== NAVBAR ===== */
+.navbar { height: 72px; }
+.navbar-ibc {
+  background: white;
+  border-bottom: 2px solid #C9A84C;
+  box-shadow: 0 2px 20px rgba(27, 94, 53, 0.08);
 }
+
+/* ===== SIDEBAR DASHBOARD ===== */
+.sidebar-ibc {
+  background-color: #1B5E35;
+  border-right: 1px solid #2E7D52;
+}
+.sidebar-item {
+  color: rgba(255, 255, 255, 0.80);
+  transition: all 0.2s ease;
+  border-radius: 0;
+}
+.sidebar-item:hover, .sidebar-item.active {
+  background-color: rgba(201, 168, 76, 0.15);
+  color: #F0C040;
+  border-left: 3px solid #C9A84C;
+}
+
+/* ===== KPI CARDS DASHBOARD ===== */
+.kpi-card {
+  background: white;
+  border-left: 4px solid #1B5E35;
+  box-shadow: var(--shadow-premium);
+  transition: all 0.3s ease;
+}
+.kpi-card:hover {
+  box-shadow: var(--shadow-gold);
+  border-left-color: #C9A84C;
+}
+.kpi-value {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1B5E35;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #6B7280;
+}
+
+/* ===== BADGE STATUT MEMBRE ===== */
+.badge-bronze {
+  background: linear-gradient(135deg, #8B6914, #C9A84C);
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+.badge-silver {
+  background: linear-gradient(135deg, #9E9E9E, #E0E0E0);
+  color: #1A1A1A;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+.badge-gold {
+  background: linear-gradient(135deg, #C9A84C, #F0C040);
+  color: #1B5E35;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+
+/* ===== CARTE MEMBRE DIGITALE ===== */
+.membre-card {
+  background: linear-gradient(135deg, #1B5E35 0%, #2E7D52 60%, #154A2C 100%);
+  border: 1px solid #C9A84C;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(27, 94, 53, 0.30);
+  position: relative;
+  overflow: hidden;
+  width: 380px;
+  height: 220px;
+}
+.membre-card::before {
+  content: "IBC";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  font-weight: 900;
+  font-family: "Playfair Display", serif;
+  color: rgba(201, 168, 76, 0.06);
+  letter-spacing: -5px;
+  pointer-events: none;
+}
+
+/* ===== TRANSACTION RECAP MODAL ===== */
+.transaction-recap {
+  background-color: #1B5E35;
+  border: 1px solid #C9A84C;
+  border-radius: 12px;
+  padding: 24px;
+}
+.transaction-recap .line-partenaire { color: #F0C040; font-weight: 700; }
+.transaction-recap .line-cashback   { color: #6FCF97; }
+.transaction-recap .line-admin      { color: rgba(255,255,255,0.6); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse-gold {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.6); }
+  70%  { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+@keyframes shimmer {
+  0%   { transform: translateX(-150%) rotate(45deg); }
+  100% { transform: translateX(150%)  rotate(45deg); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@utility pulse-gold  { animation: pulse-gold 2s infinite; }
+@utility fade-in-up  { animation: fadeInUp 0.6s ease forwards; }
+
+/* Badge flottant cashback */
+.badge-float {
+  @apply fixed bottom-8 right-8 z-50 px-6 py-4 shadow-2xl;
+  background: linear-gradient(135deg, #C9A84C, #F0C040);
+  color: #1B5E35;
+  font-weight: 900;
+  animation: pulse-gold 2s infinite;
+}
+
+/* ===== QR CODE CONTENEUR ===== */
+.qr-container {
+  background: white;
+  border: 2px solid #C9A84C;
+  border-radius: 8px;
+  padding: 16px;
+  display: inline-block;
+  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.20);
+}
+.qr-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #1B5E35;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ===== STEPS "COMMENT CA MARCHE" ===== */
+.step-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #1B5E35;
+  color: #F0C040;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 18px;
+  border: 2px solid #C9A84C;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+  .membre-card { width: 100%; height: auto; min-height: 180px; }
+  .kpi-value   { font-size: 1.5rem; }
+  .badge-float { bottom: 80px; right: 16px; }
+}
+
+/* ===== LIENS ===== */
+a { @apply no-underline hover:no-underline; }
