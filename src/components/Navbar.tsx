@@ -1,10 +1,11 @@
 // Navbar.tsx — IVOIRE BUSINESS CLUB
-// Version restaurée + logo ibc-logo.jpeg reconnaissable + design UI/UX harmonieux
+// Logo depuis src/assets/ibc-logo.png via import Vite
 
 import React, { useState, useEffect } from 'react';
-import { User, LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import { auth } from '../services/firebase';
 import { signOut } from 'firebase/auth';
+import ibcLogo from '../assets/ibc-logo.png';
 
 interface NavbarProps {
   user: any;
@@ -27,7 +28,6 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
 
   return (
     <>
-      {/* ===== NAVBAR PRINCIPALE ===== */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
@@ -39,34 +39,13 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
 
-            {/* ===== LOGO IBC ===== */}
+            {/* ===== LOGO ===== */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              {/* Conteneur logo carré avec fond blanc léger pour visibilité */}
-              <div
-                className={`flex-shrink-0 flex items-center justify-center overflow-hidden transition-all duration-300 ${
-                  scrolled ? 'bg-transparent' : 'bg-white/10 backdrop-blur-sm'
-                }`}
-                style={{ width: '48px', height: '48px', borderRadius: '8px' }}
-              >
-                <img
-                  src="/ibc-logo.jpeg"
-                  alt="IBC Logo"
-                  style={{ width: '44px', height: '44px', objectFit: 'contain' }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    const fb = e.currentTarget.nextElementSibling as HTMLElement;
-                    if (fb) fb.style.display = 'flex';
-                  }}
-                />
-                {/* Fallback texte si logo absent */}
-                <div
-                  className="hidden items-center justify-center w-full h-full text-white font-black text-sm"
-                  style={{ background: 'linear-gradient(135deg, #1B5E35, #2E8B57)' }}
-                >
-                  IBC
-                </div>
-              </div>
-              {/* Texte logo — visible dès sm */}
+              <img
+                src={ibcLogo}
+                alt="IBC Logo"
+                style={{ width: 44, height: 44, objectFit: 'contain', flexShrink: 0 }}
+              />
               <div className="hidden sm:flex flex-col leading-none">
                 <span
                   className={`font-serif font-black text-[15px] tracking-tight uppercase italic transition-colors duration-300 ${
@@ -85,7 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
               </div>
             </div>
 
-            {/* ===== LIENS DE NAVIGATION (desktop) ===== */}
+            {/* ===== LIENS NAVIGATION (desktop) ===== */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -110,10 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                   <div className="flex items-center gap-2">
                     <span
                       className="px-2 py-0.5 text-[10px] font-black uppercase tracking-widest rounded-full"
-                      style={{
-                        background: 'linear-gradient(135deg, #C9A84C, #F0C040)',
-                        color: '#1B5E35'
-                      }}
+                      style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)', color: '#1B5E35' }}
                     >
                       {profile?.status || 'BRONZE'}
                     </span>
@@ -149,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                   </button>
                   <button
                     onClick={onRegisterClick}
-                    className="text-sm font-black uppercase tracking-wider text-[#1B5E35] px-5 py-2 whitespace-nowrap transition-all duration-300 hover:scale-105 shadow-lg"
+                    className="text-sm font-black uppercase tracking-wider text-[#1B5E35] px-5 py-2 whitespace-nowrap transition-all hover:scale-105 shadow-lg"
                     style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)' }}
                   >
                     S&apos;inscrire
@@ -158,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
               )}
             </div>
 
-            {/* ===== BURGER MENU (mobile) ===== */}
+            {/* ===== BURGER (mobile) ===== */}
             <button
               className={`lg:hidden w-10 h-10 flex items-center justify-center ${
                 scrolled ? 'text-[#1B5E35]' : 'text-white'
@@ -172,7 +148,7 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
         </div>
       </nav>
 
-      {/* ===== MENU MOBILE DÉROULANT ===== */}
+      {/* ===== MENU MOBILE ===== */}
       {mobileOpen && (
         <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b-2 border-[#C9A84C] shadow-xl px-4 py-4">
           <div className="flex flex-col gap-3 max-w-7xl mx-auto">
