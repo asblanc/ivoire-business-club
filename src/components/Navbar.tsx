@@ -1,5 +1,5 @@
 // Navbar.tsx — IVOIRE BUSINESS CLUB
-// Logo en cercle doré harmonieux
+// Logo image arrondie en cercle directement sur l'img
 
 import React, { useState, useEffect } from 'react';
 import { LogOut, Menu, X } from 'lucide-react';
@@ -26,6 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
 
   const navLinks = ['Accueil', 'Partenaires', 'Avantages', 'Contact'];
 
+  const logoSize = 44;
+  const ringColor = scrolled ? '#C9A84C' : '#F0C040';
+
   return (
     <>
       <nav
@@ -39,44 +42,44 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
 
-            {/* ===== LOGO EN CERCLE ===== */}
+            {/* ===== LOGO DANS HEADER ===== */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              <div
+              <img
+                src={ibcLogo}
+                alt="IBC Logo"
                 style={{
-                  width: 50,
-                  height: 50,
+                  width: logoSize,
+                  height: logoSize,
+                  objectFit: 'cover',
                   borderRadius: '50%',
-                  border: scrolled ? '2.5px solid #C9A84C' : '2.5px solid rgba(201,168,76,0.85)',
-                  boxShadow: scrolled
-                    ? '0 0 0 3px rgba(201,168,76,0.15), 0 4px 14px rgba(27,94,53,0.15)'
-                    : '0 0 0 3px rgba(255,255,255,0.15), 0 4px 14px rgba(0,0,0,0.2)',
-                  background: 'rgba(255,255,255,0.95)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  border: `2.5px solid ${ringColor}`,
+                  boxShadow: `0 0 0 3px ${ringColor}33, 0 4px 16px rgba(27,94,53,0.18)`,
+                  display: 'block',
                   flexShrink: 0,
-                  overflow: 'hidden',
-                  transition: 'all 0.3s ease',
                 }}
-              >
-                <img
-                  src={ibcLogo}
-                  alt="IBC Logo"
-                  style={{ width: 38, height: 38, objectFit: 'contain' }}
-                />
-              </div>
-              <div className="hidden sm:flex flex-col leading-none">
+              />
+              <div className="flex flex-col leading-tight">
                 <span
-                  className={`font-serif font-black text-[15px] tracking-tight uppercase italic transition-colors duration-300 ${
-                    scrolled ? 'text-[#1B5E35]' : 'text-white'
-                  }`}
+                  style={{
+                    fontSize: scrolled ? '15px' : '14px',
+                    fontWeight: 900,
+                    letterSpacing: '-0.02em',
+                    fontStyle: 'italic',
+                    textTransform: 'uppercase',
+                    color: scrolled ? '#1B5E35' : '#FFFFFF',
+                  }}
                 >
                   Ivoire Business Club
                 </span>
                 <span
-                  className={`text-[8px] uppercase tracking-[0.45em] font-black transition-colors duration-300 ${
-                    scrolled ? 'text-[#C9A84C]' : 'text-[#F0C040]'
-                  }`}
+                  style={{
+                    fontSize: '9px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.4em',
+                    fontWeight: 900,
+                    color: scrolled ? '#C9A84C' : '#F0C040',
+                    marginTop: '2px',
+                  }}
                 >
                   Prestige &amp; Excellence
                 </span>
@@ -84,39 +87,29 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
             </div>
 
             {/* ===== LIENS NAVIGATION (desktop) ===== */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
                 <a
                   key={link}
                   href={`#${link.toLowerCase()}`}
-                  className={`text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative group ${
-                    scrolled ? 'text-[#1B5E35] hover:text-[#C9A84C]' : 'text-white/90 hover:text-[#F0C040]'
+                  className={`text-sm font-semibold uppercase tracking-wider transition-colors duration-200 hover:text-[#C9A84C] ${
+                    scrolled ? 'text-[#1B5E35]' : 'text-white'
                   }`}
                 >
                   {link}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 ${
-                    scrolled ? 'bg-[#C9A84C]' : 'bg-[#F0C040]'
-                  }`} />
                 </a>
               ))}
             </div>
 
             {/* ===== ACTIONS (desktop) ===== */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
               {user ? (
                 <>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="px-2 py-0.5 text-[10px] font-black uppercase tracking-widest rounded-full"
-                      style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)', color: '#1B5E35' }}
-                    >
-                      {profile?.status || 'BRONZE'}
-                    </span>
-                    <span className={`text-sm font-semibold whitespace-nowrap ${
-                      scrolled ? 'text-[#1B5E35]' : 'text-white'
-                    }`}>
-                      {profile?.firstName || profile?.name || user.displayName || 'Membre'}
-                    </span>
+                  <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border ${
+                    scrolled ? 'border-[#C9A84C] text-[#1B5E35]' : 'border-white/30 text-white'
+                  }`}>
+                    <span>{profile?.status || 'BRONZE'}</span>
+                    <span>{profile?.firstName || profile?.name || user.displayName || 'Membre'}</span>
                   </div>
                   <button
                     onClick={() => signOut(auth)}
@@ -134,20 +127,20 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                 <>
                   <button
                     onClick={onAuthClick}
-                    className={`text-sm font-semibold uppercase tracking-wider whitespace-nowrap transition-all duration-300 px-4 py-2 border ${
+                    className={`px-4 h-9 text-xs font-black uppercase tracking-widest border-2 transition-all duration-300 ${
                       scrolled
-                        ? 'border-[#1B5E35] text-[#1B5E35] hover:bg-[#1B5E35] hover:text-white'
-                        : 'border-white/50 text-white hover:bg-white/10'
+                        ? 'border-[#1B5E35] text-[#1B5E35] hover:bg-[#1B5E35] hover:text-[#F0C040]'
+                        : 'border-white text-white hover:bg-white hover:text-[#1B5E35]'
                     }`}
                   >
                     Connexion
                   </button>
                   <button
                     onClick={onRegisterClick}
-                    className="text-sm font-black uppercase tracking-wider text-[#1B5E35] px-5 py-2 whitespace-nowrap transition-all hover:scale-105 shadow-lg"
+                    className="px-4 h-9 text-xs font-black uppercase tracking-widest text-[#1B5E35] transition-all hover:scale-105"
                     style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)' }}
                   >
-                    S&apos;inscrire
+                    S'inscrire
                   </button>
                 </>
               )}
@@ -155,22 +148,20 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
 
             {/* ===== BURGER (mobile) ===== */}
             <button
-              className={`lg:hidden w-10 h-10 flex items-center justify-center ${
+              className={`md:hidden w-10 h-10 flex items-center justify-center ${
                 scrolled ? 'text-[#1B5E35]' : 'text-white'
               }`}
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
-      </nav>
 
-      {/* ===== MENU MOBILE ===== */}
-      {mobileOpen && (
-        <div className="fixed top-[72px] left-0 right-0 z-40 bg-white border-b-2 border-[#C9A84C] shadow-xl px-4 py-4">
-          <div className="flex flex-col gap-3 max-w-7xl mx-auto">
+        {/* ===== MENU MOBILE ===== */}
+        {mobileOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 px-4 py-4 flex flex-col gap-3">
             {navLinks.map((link) => (
               <a
                 key={link}
@@ -181,35 +172,33 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
                 {link}
               </a>
             ))}
-            <div className="flex gap-3 mt-2">
-              {user ? (
+            {user ? (
+              <button
+                onClick={() => { signOut(auth); setMobileOpen(false); }}
+                className="flex-1 h-10 border-2 border-[#1B5E35] text-[#1B5E35] text-xs font-black uppercase tracking-widest hover:bg-[#1B5E35] hover:text-[#F0C040] transition-all"
+              >
+                Déconnexion
+              </button>
+            ) : (
+              <>
                 <button
-                  onClick={() => { signOut(auth); setMobileOpen(false); }}
+                  onClick={() => { onAuthClick(); setMobileOpen(false); }}
                   className="flex-1 h-10 border-2 border-[#1B5E35] text-[#1B5E35] text-xs font-black uppercase tracking-widest hover:bg-[#1B5E35] hover:text-[#F0C040] transition-all"
                 >
-                  Déconnexion
+                  Connexion
                 </button>
-              ) : (
-                <>
-                  <button
-                    onClick={() => { onAuthClick(); setMobileOpen(false); }}
-                    className="flex-1 h-10 border-2 border-[#1B5E35] text-[#1B5E35] text-xs font-black uppercase tracking-widest hover:bg-[#1B5E35] hover:text-[#F0C040] transition-all"
-                  >
-                    Connexion
-                  </button>
-                  <button
-                    onClick={() => { onRegisterClick(); setMobileOpen(false); }}
-                    className="flex-1 h-10 text-xs font-black uppercase tracking-widest text-[#1B5E35] transition-all hover:scale-105"
-                    style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)' }}
-                  >
-                    S&apos;inscrire
-                  </button>
-                </>
-              )}
-            </div>
+                <button
+                  onClick={() => { onRegisterClick(); setMobileOpen(false); }}
+                  className="flex-1 h-10 text-xs font-black uppercase tracking-widest text-[#1B5E35] transition-all hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #C9A84C, #F0C040)' }}
+                >
+                  S'inscrire
+                </button>
+              </>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </nav>
     </>
   );
 };
