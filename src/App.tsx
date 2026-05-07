@@ -374,7 +374,7 @@ const App: React.FC = () => {
             </section>
 
             {/* NOS PARTENAIRES */}
-            <section id="nos-partenaires" className="py-32 bg-white">
+            <section id="partenaires" className="py-32 bg-white">
               <div className="max-w-7xl mx-auto px-4">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
                   <div>
