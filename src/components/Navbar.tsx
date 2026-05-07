@@ -1,5 +1,5 @@
 // Navbar.tsx — IVOIRE BUSINESS CLUB
-// Logo depuis src/assets/ibc-logo.png via import Vite
+// Logo en cercle doré harmonieux
 
 import React, { useState, useEffect } from 'react';
 import { LogOut, Menu, X } from 'lucide-react';
@@ -39,13 +39,32 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center justify-between h-full">
 
-            {/* ===== LOGO ===== */}
+            {/* ===== LOGO EN CERCLE ===== */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              <img
-                src={ibcLogo}
-                alt="IBC Logo"
-                style={{ width: 44, height: 44, objectFit: 'contain', flexShrink: 0 }}
-              />
+              <div
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: '50%',
+                  border: scrolled ? '2.5px solid #C9A84C' : '2.5px solid rgba(201,168,76,0.85)',
+                  boxShadow: scrolled
+                    ? '0 0 0 3px rgba(201,168,76,0.15), 0 4px 14px rgba(27,94,53,0.15)'
+                    : '0 0 0 3px rgba(255,255,255,0.15), 0 4px 14px rgba(0,0,0,0.2)',
+                  background: 'rgba(255,255,255,0.95)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <img
+                  src={ibcLogo}
+                  alt="IBC Logo"
+                  style={{ width: 38, height: 38, objectFit: 'contain' }}
+                />
+              </div>
               <div className="hidden sm:flex flex-col leading-none">
                 <span
                   className={`font-serif font-black text-[15px] tracking-tight uppercase italic transition-colors duration-300 ${
