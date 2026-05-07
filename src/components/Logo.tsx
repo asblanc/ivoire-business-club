@@ -1,6 +1,6 @@
 // Logo.tsx — Composant Logo IBC
-// Utilise le vrai logo si disponible dans /public/ibc-logo.png
-// Sinon affiche le logo textuel SVG aux couleurs officielles IBC
+// Affiche le vrai logo PNG depuis /public/ibc-logo.png
+// Fallback automatique vers logo textuel si image absente
 
 import React from 'react';
 
@@ -11,67 +11,87 @@ interface LogoProps {
   className?: string;
 }
 
-const sizeMap = {
-  sm: { img: 'h-8 w-8',  text: 'text-sm' },
-  md: { img: 'h-10 w-10', text: 'text-base' },
-  lg: { img: 'h-12 w-12', text: 'text-lg' },
-  xl: { img: 'h-16 w-16', text: 'text-xl' },
-};
-
 export const Logo: React.FC<LogoProps> = ({
   size = 'md',
   variant = 'default',
   showText = true,
   className = '',
 }) => {
-  const { img, text } = sizeMap[size];
+  // Tailles de l'image logo selon la prop size
+  const imgSize = {
+    sm: 'h-8 w-8',
+    md: 'h-11 w-11',
+    lg: 'h-14 w-14',
+    xl: 'h-20 w-20',
+  }[size];
 
-  const textColor =
-    variant === 'white' ? 'text-white' :
-    variant === 'dark'  ? 'text-[#154A2C]' :
-    'text-[#1B5E35]';
+  // Taille du texte
+  const textSize = {
+    sm: 'text-[10px]',
+    md: 'text-xs',
+    lg: 'text-sm',
+    xl: 'text-base',
+  }[size];
+
+  // Couleur du mot "IVOIRE" selon le variant
+  const ivoireColor = {
+    default: '#1B5E35',
+    white:   '#FFFFFF',
+    dark:    '#154A2C',
+  }[variant];
+
+  const [imgError, setImgError] = React.useState(false);
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      {/* Vrai logo image — place ibc-logo.png dans /public/ */}
-      <img
-        src="/ibc-logo.png"
-        alt="IBC - Ivoire Business Club"
-        className={`${img} object-contain`}
-        onError={(e) => {
-          // Fallback : logo SVG textuel si l'image n'est pas trouvée
-          const target = e.currentTarget;
-          target.style.display = 'none';
-          const fallback = target.nextElementSibling as HTMLElement;
-          if (fallback) fallback.style.display = 'flex';
-        }}
-      />
-      {/* Logo SVG fallback (couleurs IBC officielles) */}
-      <div
-        className={`${img} rounded-full flex items-center justify-center font-black text-[#F0C040]`}
-        style={{
-          background: 'linear-gradient(135deg, #1B5E35 0%, #154A2C 100%)',
-          border: '2px solid #C9A84C',
-          display: 'none', // Affiché uniquement si l'image échoue
-          fontSize: size === 'sm' ? '10px' : size === 'xl' ? '16px' : '12px',
-        }}
-      >
-        IBC
-      </div>
+    <div className={`flex items-center gap-3 flex-shrink-0 ${className}`}>
+
+      {/* ===== IMAGE LOGO RÉELLE ===== */}
+      {!imgError ? (
+        <img
+          src="/ibc-logo.png"
+          alt="IBC - Ivoire Business Club"
+          className={`${imgSize} object-contain flex-shrink-0`}
+          style={{ maxWidth: 'none' }}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        /* ===== FALLBACK : cercle vert avec texte IBC ===== */
+        <div
+          className={`${imgSize} rounded-full flex items-center justify-center font-black text-[#F0C040] flex-shrink-0`}
+          style={{
+            background: 'linear-gradient(135deg, #1B5E35 0%, #154A2C 100%)',
+            border: '2px solid #C9A84C',
+            fontSize: size === 'sm' ? '9px' : size === 'xl' ? '16px' : '11px',
+            letterSpacing: '0.05em',
+          }}
+        >
+          IBC
+        </div>
+      )}
+
+      {/* ===== TEXTE LOGO ===== */}
       {showText && (
-        <div>
-          <div
-            className={`font-black tracking-widest uppercase ${text} ${textColor}`}
-            style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.15em' }}
+        <div className="flex flex-col leading-none">
+          <span
+            className={`font-black uppercase tracking-wider ${textSize} leading-tight`}
+            style={{
+              fontFamily: '"Playfair Display", serif',
+              color: ivoireColor,
+              letterSpacing: '0.12em',
+            }}
           >
             IVOIRE
-          </div>
-          <div
-            className={`font-black tracking-widest uppercase ${text} text-[#C9A84C]`}
-            style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.15em', marginTop: '-4px' }}
+          </span>
+          <span
+            className={`font-black uppercase tracking-wider ${textSize} leading-tight`}
+            style={{
+              fontFamily: '"Playfair Display", serif',
+              color: '#C9A84C',
+              letterSpacing: '0.12em',
+            }}
           >
             BUSINESS CLUB
-          </div>
+          </span>
         </div>
       )}
     </div>
