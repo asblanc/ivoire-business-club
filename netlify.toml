@@ -1,0 +1,14 @@
+# Configuration Netlify pour IVOIRE BUSINESS CLUB
+# Commande : npm run build | Dossier de publication : dist
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "18"
