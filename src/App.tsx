@@ -200,7 +200,7 @@ const App: React.FC = () => {
                         </div>
                       ))}
                     </div>
-                    <button className="w-full py-4 bg-brand-green text-brand-gold-light font-black text-[10px] uppercase tracking-[0.3em] hover:brightness-110 transition-all flex items-center justify-center gap-2 rounded-none">
+                    <button onClick={() => setView('member-registration')} className="w-full py-4 bg-brand-green text-brand-gold-light font-black text-[10px] uppercase tracking-[0.3em] hover:brightness-110 transition-all flex items-center justify-center gap-2 rounded-none">
                       Devenir Membre pour bénéficier
                     </button>
                   </div>
