@@ -1,7 +1,8 @@
 // Logo.tsx — Composant Logo IBC
-// Logo sans fond : image directe, couronne visible, style harmonieux
+// Utilise src/assets/ibc-logo.png (import Vite)
 
 import React from 'react';
+import ibcLogo from '../assets/ibc-logo.png';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -16,31 +17,11 @@ export const Logo: React.FC<LogoProps> = ({
   showText = true,
   className = '',
 }) => {
-  // Taille de l'image selon size
-  const imgSize = {
-    sm: 32,
-    md: 44,
-    lg: 56,
-    xl: 72,
-  }[size];
+  const imgSize = { sm: 32, md: 44, lg: 56, xl: 72 }[size];
 
-  // Taille du texte principal
-  const titleSize = {
-    sm: '11px',
-    md: '14px',
-    lg: '17px',
-    xl: '22px',
-  }[size];
+  const titleSize = { sm: '11px', md: '14px', lg: '17px', xl: '22px' }[size];
+  const subSize   = { sm: '7px',  md: '8px',  lg: '9px',  xl: '11px' }[size];
 
-  // Taille du sous-titre
-  const subSize = {
-    sm: '7px',
-    md: '8px',
-    lg: '9px',
-    xl: '11px',
-  }[size];
-
-  // Couleurs selon variant
   const titleColor = {
     default: '#1B5E35',
     white:   '#FFFFFF',
@@ -53,42 +34,20 @@ export const Logo: React.FC<LogoProps> = ({
     dark:    '#C9A84C',
   }[variant];
 
-  const [imgError, setImgError] = React.useState(false);
-
   return (
     <div className={`flex items-center gap-3 flex-shrink-0 ${className}`}>
       {/* ===== IMAGE LOGO SANS FOND ===== */}
-      {!imgError ? (
-        <img
-          src="/ibc-logo.jpeg"
-          alt="IBC — Ivoire Business Club"
-          style={{
-            width: imgSize,
-            height: imgSize,
-            objectFit: 'contain',
-            flexShrink: 0,
-            display: 'block',
-          }}
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        /* Fallback texte si image absente */
-        <span
-          style={{
-            width: imgSize,
-            height: imgSize,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 900,
-            fontSize: titleSize,
-            color: titleColor,
-            flexShrink: 0,
-          }}
-        >
-          IBC
-        </span>
-      )}
+      <img
+        src={ibcLogo}
+        alt="IBC — Ivoire Business Club"
+        style={{
+          width: imgSize,
+          height: imgSize,
+          objectFit: 'contain',
+          flexShrink: 0,
+          display: 'block',
+        }}
+      />
 
       {/* ===== TEXTE LOGO ===== */}
       {showText && (
