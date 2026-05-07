@@ -6,7 +6,7 @@ import { db } from './services/firebase';
 import { Navbar } from './components/Navbar';
 import { AuthModal } from './components/AuthModal';
 import { MemberDashboard } from './components/MemberDashboard';
-import { Logo } from './components/Logo';
+import { Logo } from './components/Logo'; import ibcLogo from './assets/ibc-logo.png';
 import { 
   Users, 
   MapPin, 
@@ -307,7 +307,7 @@ const App: React.FC = () => {
                     </button>
                     <button 
                       onClick={() => setView('partner-registration')}
-                      className="btn-membership border-2 border-white/50 text-white text-lg hover:bg-white hover:text-brand-green-dark hover:border-white"
+                      className="btn-membership border-2 border-white/50 text-white text-lg hover:bg-[#C9A84C] hover:text-[#1B5E35] hover:border-[#C9A84C]"
                     >
                       Devenir Partenaire
                     </button>
