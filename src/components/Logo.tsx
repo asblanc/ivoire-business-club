@@ -1,5 +1,5 @@
 // Logo.tsx — Composant Logo IBC
-// Affiche le vrai logo PNG depuis /public/ibc-logo.png
+// Affiche le vrai logo JPEG depuis /public/ibc-logo.jpeg
 // Fallback automatique vers logo textuel si image absente
 
 import React from 'react';
@@ -17,7 +17,6 @@ export const Logo: React.FC<LogoProps> = ({
   showText = true,
   className = '',
 }) => {
-  // Tailles de l'image logo selon la prop size
   const imgSize = {
     sm: 'h-8 w-8',
     md: 'h-11 w-11',
@@ -25,7 +24,6 @@ export const Logo: React.FC<LogoProps> = ({
     xl: 'h-20 w-20',
   }[size];
 
-  // Taille du texte
   const textSize = {
     sm: 'text-[10px]',
     md: 'text-xs',
@@ -33,7 +31,6 @@ export const Logo: React.FC<LogoProps> = ({
     xl: 'text-base',
   }[size];
 
-  // Couleur du mot "IVOIRE" selon le variant
   const ivoireColor = {
     default: '#1B5E35',
     white:   '#FFFFFF',
@@ -45,10 +42,10 @@ export const Logo: React.FC<LogoProps> = ({
   return (
     <div className={`flex items-center gap-3 flex-shrink-0 ${className}`}>
 
-      {/* ===== IMAGE LOGO RÉELLE ===== */}
+      {/* ===== IMAGE LOGO RÉELLE (ibc-logo.jpeg dans /public/) ===== */}
       {!imgError ? (
         <img
-          src="/ibc-logo.png"
+          src="/ibc-logo.jpeg"
           alt="IBC - Ivoire Business Club"
           className={`${imgSize} object-contain flex-shrink-0`}
           style={{ maxWidth: 'none' }}
