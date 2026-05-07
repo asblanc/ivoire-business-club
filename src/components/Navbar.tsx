@@ -1,5 +1,5 @@
 // Navbar.tsx — IVOIRE BUSINESS CLUB
-// Logo image arrondie en cercle directement sur l'img
+// Logo image arrondie + underline smooth sur les liens
 
 import React, { useState, useEffect } from 'react';
 import { LogOut, Menu, X } from 'lucide-react';
@@ -24,7 +24,12 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = ['Accueil', 'Partenaires', 'Avantages', 'Contact'];
+  const navLinks = [
+    { label: 'Accueil', href: '#accueil' },
+    { label: 'Partenaires', href: '#partenaires' },
+    { label: 'Avantages', href: '#avantages' },
+    { label: 'Contact', href: '#contact' },
+  ];
 
   const logoSize = 44;
   const ringColor = scrolled ? '#C9A84C' : '#F0C040';
@@ -86,17 +91,20 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
               </div>
             </div>
 
-            {/* ===== LIENS NAVIGATION (desktop) - avec soulignement au hover ===== */}
+            {/* ===== LIENS NAVIGATION (desktop) - underline smooth ===== */}
             <div className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
                 <a
-                  key={link}
-                  href={`#${link.toLowerCase()}`}
-                  className={`text-sm font-semibold uppercase tracking-wider transition-all duration-200 hover:text-[#C9A84C] hover:underline underline-offset-4 decoration-[#C9A84C] decoration-2 ${
+                  key={link.label}
+                  href={link.href}
+                  className={`relative text-sm font-semibold uppercase tracking-wider transition-colors duration-300 group ${
                     scrolled ? 'text-[#1B5E35]' : 'text-white'
                   }`}
                 >
-                  {link}
+                  {link.label}
+                  <span
+                    className="absolute bottom-[-3px] left-0 h-[2px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out bg-[#C9A84C]"
+                  />
                 </a>
               ))}
             </div>
@@ -164,12 +172,13 @@ export const Navbar: React.FC<NavbarProps> = ({ user, profile, onAuthClick, onRe
           <div className="md:hidden bg-white border-t border-gray-100 px-4 py-4 flex flex-col gap-3">
             {navLinks.map((link) => (
               <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
+                key={link.label}
+                href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="text-sm font-semibold uppercase tracking-wider text-[#1B5E35] py-2 border-b border-gray-100 hover:text-[#C9A84C] hover:underline underline-offset-4 decoration-[#C9A84C] decoration-2 transition-all"
+                className="relative text-sm font-semibold uppercase tracking-wider text-[#1B5E35] py-2 border-b border-gray-100 group inline-block transition-colors duration-200 hover:text-[#C9A84C]"
               >
-                {link}
+                {link.label}
+                <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out bg-[#C9A84C]" />
               </a>
             ))}
             {user ? (
