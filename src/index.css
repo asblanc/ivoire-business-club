@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  /* Charte IBC Officielle */
+  --ibc-green: #1B5E35;
+  --ibc-green-dark: #154A2C;
+  --ibc-gold: #C9A84C;
+  --ibc-gold-light: #F0C040;
+  
+  /* Couleurs brand (compatibilité) */
+  --color-brand-green: #1B5E35;
+  --color-brand-green-dark: #154A2C;
+  --color-brand-green-light: #2E7D52;
+  --color-brand-gold: #C9A84C;
+  --color-brand-gold-light: #F0C040;
+  --color-brand-cream: #FDFBFA;
+  --color-brand-border: #E8E5DC;
+
+  --shadow-premium: 0 20px 50px rgba(21, 74, 44, 0.1);
+  --shadow-luxury: 0 30px 60px rgba(21, 74, 44, 0.15);
+}
+
+@layer base {
+  body {
+    @apply font-sans antialiased bg-brand-cream text-brand-green-dark;
+  }
+}
+
+.text-gold { @apply text-brand-gold; }
+.bg-gold { @apply bg-brand-gold; }
+.bg-green-dark { @apply bg-brand-green-dark; }
+
+.gradient-hero {
+  background: linear-gradient(135deg, #0F341D 0%, #154A2C 50%, #1B5E35 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #C9A84C 0%, #F0C040 100%);
+}
+
+.label-caps {
+  @apply text-[10px] font-black uppercase tracking-[0.4em] text-brand-gold;
+}
+
+.card-luxe {
+  @apply bg-white border border-brand-border rounded-none p-8 transition-all duration-500 hover:shadow-luxury hover:-translate-y-2;
+}
+
+@keyframes pulse-gold {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.6); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(201, 168, 76, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%) rotate(45deg); }
+  100% { transform: translateX(150%) rotate(45deg); }
+}
+
+@utility pulse-gold {
+  animation: pulse-gold 2s infinite;
+}
+
+@utility shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+@utility shimmer-after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: shimmer 4s infinite;
+}
+
+.shimmer::after {
+  @apply shimmer-after;
+}
+
+.badge-float {
+  @apply fixed bottom-8 right-8 z-50 px-6 py-4 bg-brand-gold text-brand-green-dark font-bold rounded-none shadow-2xl;
+  animation: pulse-gold 2s infinite;
+}
+
+/* Bootstrap Adjustments */
+.navbar {
+  height: 72px;
+}
+
+.btn-membership {
+  height: 54px;
+  border-radius: 0px;
+  @apply font-bold px-10 flex items-center justify-center transition-all duration-300 active:scale-95 no-underline;
+}
+
+a {
+  @apply no-underline hover:no-underline;
+}

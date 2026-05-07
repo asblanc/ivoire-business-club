@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile containing IBC membership details, roles, and balance.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["member", "partner", "admin"] },
+        "status": { "type": "string", "enum": ["BRONZE", "SILVER", "GOLD"] },
+        "memberId": { "type": "string", "description": "Unique 8-character ID" },
+        "balance": { "type": "number", "description": "Cashback balance in FCFA" },
+        "qrCode": { "type": "string" },
+        "monthlySubActive": { "type": "boolean" },
+        "lastSubDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Partner": {
+      "title": "Partner",
+      "description": "Information about businesses registered as IBC partners.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "location": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "commissionRate": { "type": "number", "description": "Default 0.10 (10%)" },
+        "ownerUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "category", "ownerUid"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Record of a payment at a partner business.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "memberUid": { "type": "string" },
+        "partnerId": { "type": "string" },
+        "amount": { "type": "number" },
+        "cashbackAmount": { "type": "number", "description": "3% of amount" },
+        "platformGain": { "type": "number", "description": "7% of amount" },
+        "partnerNet": { "type": "number", "description": "90% of amount" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["memberUid", "partnerId", "amount"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "partners/{partnerId}": {
+      "schema": "Partner",
+      "description": "Partner businesses"
+    },
+    "transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial records"
+    }
+  }
+}

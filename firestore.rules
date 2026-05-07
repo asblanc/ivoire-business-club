@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Helpers
+    function isSignedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    
+    // User Roles (lookup)
+    function getUserData(userId) {
+      return get(/databases/$(database)/documents/users/$(userId)).data;
+    }
+    function isAdmin() {
+      return isSignedIn() && getUserData(request.auth.uid).role == 'admin';
+    }
+    function isPartner() {
+      return isSignedIn() && getUserData(request.auth.uid).role == 'partner';
+    }
+
+    // --- USERS ---
+    match /users/{userId} {
+      function isValidUser(data) {
+        return data.keys().hasAll(['uid', 'name', 'email', 'role']) &&
+               data.uid is string && data.uid.size() < 100 &&
+               data.name is string && data.name.size() < 100 &&
+               data.email is string && data.email.size() < 100 &&
+               data.balance is number &&
+               data.role in ['member', 'partner', 'admin'];
+      }
+
+      allow get: if isOwner(userId) || isAdmin() || isPartner();
+      allow list: if isAdmin();
+      
+      allow create: if isSignedIn() && isOwner(userId) && 
+                      isValidUser(incoming()) && 
+                      incoming().role == 'member' && 
+                      incoming().balance == 0;
+      
+      allow update: if (isOwner(userId) && 
+                        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'email']) &&
+                        isValidUser(incoming())) || 
+                     isAdmin();
+    }
+
+    // --- PARTNERS ---
+    match /partners/{partnerId} {
+      allow read: if true; // Publicly browse partners
+      allow write: if isAdmin();
+    }
+
+    // --- TRANSACTIONS ---
+    match /transactions/{transactionId} {
+      function isValidTransaction(data) {
+        return data.keys().hasAll(['memberUid', 'partnerId', 'amount', 'timestamp']) &&
+               data.memberUid is string && data.partnerId is string &&
+               data.amount is number && data.amount > 0;
+      }
+
+      allow get: if isSignedIn() && (
+        isOwner(existing().memberUid) || 
+        getUserData(request.auth.uid).partnerId == existing().partnerId ||
+        isAdmin()
+      );
+      
+      allow list: if isSignedIn() && (
+        resource.data.memberUid == request.auth.uid || 
+        isAdmin()
+      );
+
+      allow create: if isPartner() && isValidTransaction(incoming()) && 
+                      incoming().partnerId == getUserData(request.auth.uid).partnerId;
+    }
+  }
+}

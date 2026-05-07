@@ -1,0 +1,6 @@
+{
+  "name": "IVOIRE BUSINESS CLUB",
+  "description": "Club d'Affaires & Réseau de Partenaires - Synergie économique et avantages membres.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["Real-time Transactions", "QR Code Member ID", "Cashback Rewards"]
+}
