@@ -270,7 +270,7 @@ const App: React.FC = () => {
                     className="inline-flex items-center gap-4 mb-8"
                   >
                     <span className="w-16 h-[2px] bg-brand-gold" />
-                    <span className="text-[10px] uppercase tracking-[0.4em] text-brand-gold font-black">Luxe, Affaires & Prestige</span>
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-brand-gold font-black">Tourisme & Fidélité</span>
                   </motion.div>
                   
                   <motion.h1 
@@ -524,7 +524,7 @@ const App: React.FC = () => {
               <h3 className="text-2xl font-serif font-black text-white italic tracking-tighter mb-3">IVOIRE BUSINESS CLUB</h3>
               <p className="label-caps text-brand-gold !opacity-100 font-bold mb-6">Consommez local, gagnez plus, vivez mieux.</p>
               <p className="text-sm leading-relaxed text-white/50 max-w-sm">
-                Rejoignez la première plateforme d'échange et de networking dédiée aux entrepreneurs et professionnels de Côte d'Ivoire.
+                Plateforme touristique et programme de fidélité pour les professionnels de Côte d'Ivoire. Consommez dans les meilleurs établissements et accumulez du cashback à chaque visite.
               </p>
             </div>
 
